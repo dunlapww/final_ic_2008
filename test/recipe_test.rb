@@ -41,4 +41,5 @@ class RecipeTest < Minitest::Test
     expected = [ingredient1, ingredient2]
     assert_equal expected, recipe1.ingredients
   end
+
 end
