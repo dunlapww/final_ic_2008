@@ -3,6 +3,9 @@ require './lib/ingredient'
 require './lib/pantry'
 require './lib/recipe'
 require './lib/cookbook'
+require 'mocha/minitest'
+require 'date'
+require 'awesome_print'
 
 class CookBookTest < Minitest::Test
 
@@ -12,8 +15,10 @@ class CookBookTest < Minitest::Test
   end
 
   def test_it_has_attributes
+    Date.stubs(:today).returns(Date.new(2020,4,22))
     cookbook = CookBook.new
     assert_equal [], cookbook.recipes
+    assert_equal "04-22-2020", cookbook.date
   end
 
   def test_it_can_add_recipes
@@ -64,7 +69,27 @@ class CookBookTest < Minitest::Test
     assert_equal recipe2, cookbook.highest_calorie_meal
   end
 
-  
+  def test_summary
+    cookbook = CookBook.new
+    ingredient1 = Ingredient.new({name: "Cheese", unit: "C", calories: 100})
+    ingredient2 = Ingredient.new({name: "Macaroni", unit: "oz", calories: 30})
+    recipe1 = Recipe.new("Mac and Cheese")
+    recipe1.add_ingredient(ingredient1, 2)
+    recipe1.add_ingredient(ingredient2, 8)
+    ingredient3 = Ingredient.new({name: "Ground Beef", unit: "oz", calories: 100})
+    ingredient4 = Ingredient.new({name: "Bun", unit: "g", calories: 1})
+    recipe2 = Recipe.new("Burger")
+    recipe2.add_ingredient(ingredient3, 4)
+    recipe2.add_ingredient(ingredient4, 100)
+    cookbook.add_recipe(recipe1)
+    cookbook.add_recipe(recipe2)
+
+    expected = [{:name=>"Mac and Cheese", :details=>{:ingredients=>[{:ingredient=>"Macaroni", :amount=>"8 oz"}, {:ingredient=>"Cheese", :amount=>"2 C"}], :total_calories=>440}}, {:name=>"Burger", :details=>{:ingredients=>[{:ingredient=>"Ground Beef", :amount=>"4 oz"}, {:ingredient=>"Bun", :amount=>"100 g"}], :total_calories=>500}}]
+    assert_equal expected, cookbook.summary
+  end
+
+
+
 
 
 

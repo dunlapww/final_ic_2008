@@ -19,4 +19,12 @@ class Recipe
       sum += ingredient.calories * qty
     end
   end
+
+  def sorted_by_calories
+    @ingredients_required.reduce({}) do |collector, (ingredient, qty)|
+      collector[:ingredient] = ingredient.name
+      collector[:amount] = "#{qty} #{ingredient.unit}"
+      collector
+    end
+  end
 end
