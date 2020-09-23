@@ -13,4 +13,10 @@ class Recipe
   def ingredients
     @ingredients_required.keys
   end
+
+  def total_calories
+    @ingredients_required.reduce(0) do |sum, (ingredient, qty)|
+      sum += ingredient.calories * qty
+    end
+  end
 end
