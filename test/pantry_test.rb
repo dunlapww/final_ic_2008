@@ -11,6 +11,7 @@ class PantryTest < Minitest::Test
 
   def test_it_has_attributes
     pantry = Pantry.new
-    assert_equal [], pantry.stock
+    expected = {}
+    assert_equal expected, pantry.stock
   end
 end
