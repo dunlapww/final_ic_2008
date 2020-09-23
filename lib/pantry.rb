@@ -13,10 +13,13 @@ class Pantry
     @stock[ingredient] += qty
   end
 
-  # def enough_ingredients_for?(desired_recipe)
-  #   @recipes.all? do |recipe|
-  #     require "pry"; binding.pry
-  #   end
-  # end
+  def enough_ingredients_for?(recipe)
+    recipe.ingredients_required.each do |ingred, qty|
+      @stock.each do |ingredient, quantity|
+        return false if @stock[ingred] < qty
+      end
+    end
+    true
+  end
 
 end

@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require './lib/ingredient'
 require './lib/pantry'
+require './lib/cookbook'
+require './lib/recipe'
 
 class PantryTest < Minitest::Test
 
