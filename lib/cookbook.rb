@@ -9,5 +9,14 @@ class CookBook
     @recipes << recipe
   end
 
+  def ingredients
+    @recipes.reduce([]) do |collector, recipe|
+      recipe.ingredients_required.each do |ingredient, qty|
+        collector << ingredient.name if !collector.include?(ingredient.name)
+      end
+      collector
+    end
+  end
+
 
 end
