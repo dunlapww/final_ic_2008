@@ -29,7 +29,6 @@ class CookBook
 
   def summary
     @recipes.reduce([]) do |collector, recipe|
-      require "pry"; binding.pry
     end
   end
 
